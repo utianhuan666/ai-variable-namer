@@ -1,0 +1,138 @@
+{
+  "name": "ai-variable-namer",
+  "displayName": "AI 变量命名助手",
+  "description": "使用 AI 为选中文本提供智能变量命名",
+  "version": "0.0.1",
+  "author": "uhuan",
+  "publisher": "uhuan",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourUsername/ai-variable-namer"
+  },
+  "icon": "resources/icon.png",
+  "engines": {
+    "vscode": "^1.50.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:ai-variable-namer.generateName"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "ai-variable-namer.generateName",
+        "title": "AI 变量命名"
+      },
+      {
+        "command": "ai-variable-namer.showDebugLogs",
+        "title": "显示 AI 变量命名调试日志"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "when": "editorHasSelection",
+          "command": "ai-variable-namer.generateName",
+          "group": "1_modification"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "ai-variable-namer.generateName",
+        "key": "ctrl+alt+n",
+        "mac": "cmd+alt+n",
+        "when": "editorHasSelection"
+      }
+    ],
+    "configuration": {
+      "title": "AI 变量命名助手",
+      "properties": {
+        "aiVariableNamer.apiKey": {
+          "type": "string",
+          "default": "sk-rmgwowhtgjqtutiierewxjgekunijwayqidzpvjariseigzd",
+          "description": "AI 服务的 API 密钥",
+          "scope": "user",
+          "markdownDescription": "您的AI服务API密钥。**注意：** 此密钥将存储在您的用户设置中，请勿与他人共享。"
+        },
+        "aiVariableNamer.apiEndpoint": {
+          "type": "string",
+          "default": "https://api.siliconflow.cn/v1/chat/completions",
+          "description": "AI 服务的 API 端点"
+        },
+        "aiVariableNamer.model": {
+          "type": "string",
+          "enum": [
+            "Qwen/Qwen2.5-7B-Instruct",
+            "deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B",
+            "Qwen/Qwen2-1.5B-Instruct",
+            "gpt-3.5-turbo",
+            "gpt-4-turbo"
+          ],
+          "enumDescriptions": [
+            "通义千问2.5系列，7B参数量，速度快，能力强",
+            "深度求索精简版，1.5B参数量，速度最快，适合日常使用",
+            "通义千问2系列，1.5B参数量，轻量级，速度快",
+            "OpenAI的GPT-3.5系列，能力中等，需配置OpenAI API密钥",
+            "OpenAI的GPT-4系列，能力最强，响应较慢，费用较高"
+          ],
+          "default": "deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B",
+          "markdownDescription": "选择用于变量命名的AI模型\n\n**国产模型**\n- Qwen系列：阿里巴巴开发的通义千问系列\n- DeepSeek系列：深度求索系列，体积小速度快\n\n**国际模型**\n- GPT系列：需要OpenAI API密钥，功能强大但费用较高",
+          "description": "使用的 AI 模型，不同模型速度和质量有差异"
+        },
+        "aiVariableNamer.namingStyle": {
+          "type": "string",
+          "enum": ["camelCase", "snake_case", "PascalCase", "kebab-case"],
+          "enumDescriptions": [
+            "驼峰命名法，如 myVariableName（适合 JavaScript、Java、TypeScript 等）",
+            "蛇形命名法，如 my_variable_name（适合 Python、Ruby 等）",
+            "帕斯卡命名法，如 MyVariableName（适合类名或 C# 等）",
+            "串形命名法，如 my-variable-name（适合 CSS 或配置文件）"
+          ],
+          "default": "camelCase",
+          "markdownDescription": "**变量命名风格**\n\n选择生成变量名时使用的命名规范：\n- `camelCase`: 小驼峰命名法\n- `snake_case`: 蛇形命名法\n- `PascalCase`: 大驼峰/帕斯卡命名法\n- `kebab-case`: 串形/短横线命名法\n\n系统会根据所选风格自动格式化变量名",
+          "description": "变量命名风格"
+        },
+        "aiVariableNamer.language": {
+          "type": "string",
+          "enum": ["auto", "javascript", "typescript", "python", "java", "csharp", "go", "rust", "php", "ruby"],
+          "enumDescriptions": [
+            "自动检测当前文件语言（推荐使用）",
+            "JavaScript - 使用小驼峰命名法为主",
+            "TypeScript - 类似JavaScript，强类型",
+            "Python - 使用蛇形命名法为主",
+            "Java - 使用小驼峰命名法，类名使用大驼峰",
+            "C# - 类和方法使用大驼峰，私有变量前缀_",
+            "Go - 使用驼峰命名法，公开变量首字母大写",
+            "Rust - 使用蛇形命名法，常量全大写",
+            "PHP - 变量以$开头，类使用大驼峰",
+            "Ruby - 使用蛇形命名法，常量全大写"
+          ],
+          "default": "auto",
+          "markdownDescription": "**编程语言设置**\n\n指定生成变量名时参考的编程语言习惯：\n- `auto`: 自动检测当前文件类型\n- 明确指定语言将根据该语言的命名惯例生成变量名\n\n选择特定语言可以得到更符合该语言惯例的变量命名建议",
+          "description": "编程语言（用于生成符合特定语言习惯的命名）"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint src --ext ts"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.50.0",
+    "@types/node": "^14.14.0",
+    "@typescript-eslint/eslint-plugin": "^4.16.0",
+    "@typescript-eslint/parser": "^4.16.0",
+    "eslint": "^7.21.0",
+    "typescript": "^4.2.3"
+  },
+  "dependencies": {
+    "axios": "^0.21.1"
+  }
+}
