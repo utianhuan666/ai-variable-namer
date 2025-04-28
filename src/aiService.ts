@@ -62,9 +62,10 @@ ${context}
 `;
 
     // 调用 AI API
-    const response = await axios.post(
-      apiEndpoint,
-      {
+    const response = await axios({
+      method: 'post',
+      url: apiEndpoint,
+      data: {
         model: model,
         messages: [
           {
@@ -79,24 +80,32 @@ ${context}
         temperature: 0.7,
         max_tokens: 500
       },
-      {
-        headers: {
-          'Authorization': `Bearer ${apiKey}`,
-          'Content-Type': 'application/json'
-        }
-      }
-    );
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json'
+      },
+      timeout: 30000 // 设置30秒超时
+    });
 
     // 解析 AI 响应
     const aiResponse = response.data.choices[0].message.content;
     return parseAIResponse(aiResponse);
 
-  } catch (error) {
+  } catch (error: any) {
     console.error('AI 服务调用失败:', error);
-    if (axios.isAxiosError(error) && error.response) {
-      throw new Error(`AI 服务返回错误 (${error.response.status}): ${error.response.data.error?.message || JSON.stringify(error.response.data)}`);
+    
+    // 改进错误处理
+    if (axios.isAxiosError(error)) {
+      const statusCode = error.response?.status;
+      const errorMsg = error.response?.data?.error?.message || 
+                       error.response?.data?.message || 
+                       error.message || 
+                       '未知错误';
+      
+      throw new Error(`AI 服务返回错误 (${statusCode || 'N/A'}): ${errorMsg}`);
     }
-    throw error;
+    
+    throw new Error(`调用AI服务时出错: ${error.message || '未知错误'}`);
   }
 }
 
@@ -140,9 +149,21 @@ function parseAIResponse(response: string): NameSuggestion[] {
       }
     }
 
+    // 确保至少返回一个默认建议
+    if (suggestions.length === 0) {
+      suggestions.push({
+        name: 'variableName', 
+        explanation: '默认变量名 - AI未能提供有效建议'
+      });
+    }
+
     return suggestions;
   } catch (error) {
     console.error('解析 AI 响应失败:', error);
-    return [];
+    // 返回至少一个默认建议，避免前端报错
+    return [{
+      name: 'variableName',
+      explanation: '默认变量名 - 解析AI响应时出错'
+    }];
   }
 }

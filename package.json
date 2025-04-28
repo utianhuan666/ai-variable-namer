@@ -3,11 +3,11 @@
   "displayName": "AI 变量命名助手",
   "description": "使用 AI 为选中文本提供智能变量命名",
   "version": "0.0.1",
-  "author": "uhuan",
-  "publisher": "uhuan",
+  "author": "utianhuan666",
+  "publisher": "utianhuan666",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourUsername/ai-variable-namer"
+    "url": "https://github.com/utianhuan666/ai-variable-namer"
   },
   "icon": "resources/icon.png",
   "engines": {
@@ -53,7 +53,7 @@
       "properties": {
         "aiVariableNamer.apiKey": {
           "type": "string",
-          "default": "sk-rmgwowhtgjqtutiierewxjgekunijwayqidzpvjariseigzd",
+          "default": "",
           "description": "AI 服务的 API 密钥",
           "scope": "user",
           "markdownDescription": "您的AI服务API密钥。**注意：** 此密钥将存储在您的用户设置中，请勿与他人共享。"
@@ -133,6 +133,6 @@
     "typescript": "^4.2.3"
   },
   "dependencies": {
-    "axios": "^0.21.1"
+    "axios": "^1.6.7"
   }
 }
