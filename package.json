@@ -2,7 +2,7 @@
   "name": "ai-variable-namer",
   "displayName": "AI 变量命名助手",
   "description": "使用 AI 为选中文本提供智能变量命名",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "utianhuan666",
   "publisher": "utianhuan666",
   "repository": {
