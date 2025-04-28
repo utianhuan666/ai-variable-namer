@@ -17,7 +17,7 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:ai-variable-namer.generateName"
+    "onStartupFinished"
   ],
   "main": "./out/extension.js",
   "contributes": {
@@ -85,7 +85,12 @@
         },
         "aiVariableNamer.namingStyle": {
           "type": "string",
-          "enum": ["camelCase", "snake_case", "PascalCase", "kebab-case"],
+          "enum": [
+            "camelCase",
+            "snake_case",
+            "PascalCase",
+            "kebab-case"
+          ],
           "enumDescriptions": [
             "驼峰命名法，如 myVariableName（适合 JavaScript、Java、TypeScript 等）",
             "蛇形命名法，如 my_variable_name（适合 Python、Ruby 等）",
@@ -98,7 +103,18 @@
         },
         "aiVariableNamer.language": {
           "type": "string",
-          "enum": ["auto", "javascript", "typescript", "python", "java", "csharp", "go", "rust", "php", "ruby"],
+          "enum": [
+            "auto",
+            "javascript",
+            "typescript",
+            "python",
+            "java",
+            "csharp",
+            "go",
+            "rust",
+            "php",
+            "ruby"
+          ],
           "enumDescriptions": [
             "自动检测当前文件语言（推荐使用）",
             "JavaScript - 使用小驼峰命名法为主",
