@@ -11,7 +11,7 @@
   },
   "icon": "resources/icon.png",
   "engines": {
-    "vscode": "^1.50.0"
+    "vscode": "^1.99.0"
   },
   "categories": [
     "Other"
@@ -132,6 +132,7 @@
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
+    "build":"vsce package",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "lint": "eslint src --ext ts"
