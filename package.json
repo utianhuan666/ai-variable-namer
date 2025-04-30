@@ -2,7 +2,7 @@
   "name": "ai-variable-namer",
   "displayName": "AI 变量命名助手",
   "description": "使用 AI 为选中文本提供智能变量命名",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": "utianhuan666",
   "publisher": "utianhuan666",
   "repository": {
@@ -67,19 +67,15 @@
           "type": "string",
           "enum": [
             "Qwen/Qwen2.5-7B-Instruct",
-            "deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B",
-            "Qwen/Qwen2-1.5B-Instruct",
-            "gpt-3.5-turbo",
-            "gpt-4-turbo"
+            "Qwen/Qwen3-8B",
+            "Qwen/Qwen2-1.5B-Instruct"
           ],
           "enumDescriptions": [
             "通义千问2.5系列，7B参数量，速度快，能力强",
-            "深度求索精简版，1.5B参数量，速度最快，适合日常使用",
-            "通义千问2系列，1.5B参数量，轻量级，速度快",
-            "OpenAI的GPT-3.5系列，能力中等，需配置OpenAI API密钥",
-            "OpenAI的GPT-4系列，能力最强，响应较慢，费用较高"
+            "Qwen3-8B 是通义千问系列的最新大语言模型",
+            "通义千问2系列，1.5B参数量，轻量级，速度快"
           ],
-          "default": "deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B",
+          "default": "Qwen/Qwen3-8B",
           "markdownDescription": "选择用于变量命名的AI模型\n\n**国产模型**\n- Qwen系列：阿里巴巴开发的通义千问系列\n- DeepSeek系列：深度求索系列，体积小速度快\n\n**国际模型**\n- GPT系列：需要OpenAI API密钥，功能强大但费用较高",
           "description": "使用的 AI 模型，不同模型速度和质量有差异"
         },
