@@ -2,7 +2,7 @@
   "name": "ai-variable-namer",
   "displayName": "AI 变量命名助手",
   "description": "使用 AI 为选中文本提供智能变量命名",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "author": "utianhuan666",
   "publisher": "utianhuan666",
   "repository": {
@@ -23,8 +23,12 @@
   "contributes": {
     "commands": [
       {
-        "command": "ai-variable-namer.generateName",
+        "command": "ai-variable-namer.generateVariableName",
         "title": "AI 变量命名"
+      },
+      {
+        "command": "ai-variable-namer.generateMethodName",
+        "title": "AI 方法命名"
       },
       {
         "command": "ai-variable-namer.showDebugLogs",
@@ -35,16 +39,38 @@
       "editor/context": [
         {
           "when": "editorHasSelection",
-          "command": "ai-variable-namer.generateName",
+          "submenu": "ai-variable-namer.submenu",
           "group": "1_modification"
+        }
+      ],
+      "ai-variable-namer.submenu": [
+        {
+          "command": "ai-variable-namer.generateVariableName",
+          "group": "1_naming"
+        },
+        {
+          "command": "ai-variable-namer.generateMethodName",
+          "group": "1_naming"
         }
       ]
     },
+    "submenus": [
+      {
+        "id": "ai-variable-namer.submenu",
+        "label": "AI 命名助手"
+      }
+    ],
     "keybindings": [
       {
-        "command": "ai-variable-namer.generateName",
-        "key": "ctrl+alt+n",
-        "mac": "cmd+alt+n",
+        "command": "ai-variable-namer.generateVariableName",
+        "key": "ctrl+alt+v",
+        "mac": "cmd+alt+v",
+        "when": "editorHasSelection"
+      },
+      {
+        "command": "ai-variable-namer.generateMethodName",
+        "key": "ctrl+alt+m",
+        "mac": "cmd+alt+m",
         "when": "editorHasSelection"
       }
     ],
